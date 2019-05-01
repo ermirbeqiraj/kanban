@@ -7,8 +7,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Issue.Data", "Issue.Data\Is
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Issue.Test", "Issue.Test\Issue.Test.csproj", "{8B013E83-DC03-415E-8905-AE67215FD56E}"
 EndProject
-Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "Issue.Database", "Issue.Database\Issue.Database.sqlproj", "{BA3E478A-91B1-41AD-AE96-21BCDB6A6596}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Issue.Web", "Issue.Web\Issue.Web.csproj", "{69409410-C4B7-413E-B7A7-3C9FCAF02F0A}"
 EndProject
 Global
@@ -25,12 +23,6 @@ Global
 		{8B013E83-DC03-415E-8905-AE67215FD56E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8B013E83-DC03-415E-8905-AE67215FD56E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8B013E83-DC03-415E-8905-AE67215FD56E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{BA3E478A-91B1-41AD-AE96-21BCDB6A6596}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BA3E478A-91B1-41AD-AE96-21BCDB6A6596}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BA3E478A-91B1-41AD-AE96-21BCDB6A6596}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-		{BA3E478A-91B1-41AD-AE96-21BCDB6A6596}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BA3E478A-91B1-41AD-AE96-21BCDB6A6596}.Release|Any CPU.Build.0 = Release|Any CPU
-		{BA3E478A-91B1-41AD-AE96-21BCDB6A6596}.Release|Any CPU.Deploy.0 = Release|Any CPU
 		{69409410-C4B7-413E-B7A7-3C9FCAF02F0A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{69409410-C4B7-413E-B7A7-3C9FCAF02F0A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{69409410-C4B7-413E-B7A7-3C9FCAF02F0A}.Release|Any CPU.ActiveCfg = Release|Any CPU

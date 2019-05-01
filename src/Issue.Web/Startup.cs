@@ -1,10 +1,17 @@
+using Issue.Data;
+using Issue.Web.IdentityModels;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
+using System.Text;
 
 namespace Issue.Web
 {
@@ -20,7 +27,42 @@ namespace Issue.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddDbContext<AppDbContext>(opts => opts.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"),
+                x => x.MigrationsAssembly("Issue.Data")));
+            services.AddDbContext<UserDbContext>(opts => opts.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
+            services.AddAuthentication()
+                    .AddJwtBearer(cfg =>
+                    {
+                        cfg.RequireHttpsMetadata = false;
+                        cfg.SaveToken = true;
+                        cfg.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
+                        {
+                            ValidIssuer = Configuration["Token:Issuer"],
+                            ValidAudience = Configuration["Token:Issuer"],
+                            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Token:Key"]))
+                        };
+                    });
+
+            services.AddAuthorization(auth =>
+            {
+                /* SA: Control system users */
+                auth.AddPolicy("sa", policy => policy.RequireClaim("sa"));
+                /* ADMIN: Manage everything related to one specific project */
+                auth.AddPolicy("admin", policy => policy.RequireClaim("admin"));
+            });
+
+            services.AddIdentity<ApplicationUser, ApplicationRole>()
+                    .AddEntityFrameworkStores<UserDbContext>();
+
+            services.AddMvc(x => x.RespectBrowserAcceptHeader = true)
+                    .AddJsonOptions(opts => 
+                    {
+                        opts.SerializerSettings.DateFormatHandling = DateFormatHandling.IsoDateFormat;
+                        opts.SerializerSettings.DateTimeZoneHandling = DateTimeZoneHandling.Utc;
+                        opts.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+                        opts.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+                    }).SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
@@ -51,7 +93,7 @@ namespace Issue.Web
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller}/{action=Index}/{id?}");
+                    template: "api/{controller}/{action}");
             });
 
             app.UseSpa(spa =>
