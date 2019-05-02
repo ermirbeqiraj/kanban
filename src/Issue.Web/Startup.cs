@@ -47,9 +47,9 @@ namespace Issue.Web
             services.AddAuthorization(auth =>
             {
                 /* SA: Control system users */
-                auth.AddPolicy("sa", policy => policy.RequireClaim("sa"));
+                auth.AddPolicy("sa", policy => policy.RequireRole("sa"));
                 /* ADMIN: Manage everything related to one specific project */
-                auth.AddPolicy("admin", policy => policy.RequireClaim("admin"));
+                auth.AddPolicy("admin", policy => policy.RequireRole("admin"));
             });
 
             services.AddIdentity<ApplicationUser, ApplicationRole>()
