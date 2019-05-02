@@ -28,7 +28,21 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="ClientApp\src\app\services\interceptors\auth-interceptor.ts" />
+    <None Remove="ClientApp\src\app\services\interceptors\index.ts" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Issue.Data\Issue.Data.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="ClientApp\src\app\models\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <TypeScriptCompile Include="ClientApp\src\app\services\interceptors\auth-interceptor.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\services\interceptors\index.ts" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
