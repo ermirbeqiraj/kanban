@@ -30,7 +30,7 @@ namespace Issue.Web.Controllers
 
         [AllowAnonymous]
         [HttpPost]
-        public async Task<IActionResult> Token(LoginViewModel model)
+        public async Task<IActionResult> Token([FromBody]LoginViewModel model)
         {
             if (ModelState.IsValid)
             {

@@ -11,7 +11,7 @@ export class AuthService {
   constructor(private http: HttpClient) { }
 
   login(model: LoginViewModel): Observable<TokenViewModel> {
-    let url = `${this.appUrl}/login`;
+    let url = `${this.appUrl}/Token`;
     return this.http.post<TokenViewModel>(url, model);
   }
 }
