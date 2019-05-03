@@ -1,4 +1,5 @@
 using Issue.Data;
+using Issue.Data.Repositories;
 using Issue.Web.IdentityModels;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -69,6 +70,8 @@ namespace Issue.Web
             {
                 configuration.RootPath = "ClientApp/dist";
             });
+
+            services.AddTransient<IProjectRepository, ProjectRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

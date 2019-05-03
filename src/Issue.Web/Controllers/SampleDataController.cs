@@ -18,7 +18,6 @@ namespace Issue.Web.Controllers
         };
 
         [HttpGet("[action]")]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public IEnumerable<WeatherForecast> WeatherForecasts()
         {
             var rng = new Random();

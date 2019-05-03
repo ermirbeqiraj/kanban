@@ -47,6 +47,7 @@
 
   <ItemGroup>
     <Folder Include="ClientApp\src\app\account\" />
+    <Folder Include="ClientApp\src\app\mng-project\" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

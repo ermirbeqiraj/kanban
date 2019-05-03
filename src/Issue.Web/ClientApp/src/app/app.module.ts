@@ -4,22 +4,25 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 
+import { httpInterceptorProviders } from './services/interceptors';
+
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { HomeComponent } from './home/home.component';
-import { CounterComponent } from './counter/counter.component';
-import { FetchDataComponent } from './fetch-data/fetch-data.component';
-import { httpInterceptorProviders } from './services/interceptors';
 import { LoginComponent } from './account/login/login.component';
+import { ListProjectComponent } from './mng-project/list-project.component';
+import { CreateProjectComponent } from './mng-project/create-project.component';
+import { UpdateProjectComponent } from './mng-project/update-project.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavMenuComponent,
     HomeComponent,
-    CounterComponent,
-    FetchDataComponent,
-    LoginComponent
+    LoginComponent,
+    ListProjectComponent,
+    CreateProjectComponent,
+    UpdateProjectComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -29,8 +32,7 @@ import { LoginComponent } from './account/login/login.component';
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'login', component: LoginComponent },
-      { path: 'counter', component: CounterComponent },
-      { path: 'fetch-data', component: FetchDataComponent },
+      { path: 'list-project', component: ListProjectComponent },
     ])
   ],
   providers: [httpInterceptorProviders],
