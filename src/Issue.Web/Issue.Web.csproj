@@ -28,7 +28,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="ClientApp\src\app\models\AccountModels.ts" />
     <None Remove="ClientApp\src\app\services\interceptors\auth-interceptor.ts" />
+    <None Remove="ClientApp\src\app\services\interceptors\error-handler-interceptor.ts" />
     <None Remove="ClientApp\src\app\services\interceptors\index.ts" />
   </ItemGroup>
 
@@ -37,10 +39,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="ClientApp\src\app\models\" />
-  </ItemGroup>
-
-  <ItemGroup>
+    <TypeScriptCompile Include="ClientApp\src\app\models\AccountModels.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\services\interceptors\error-handler-interceptor.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\services\interceptors\auth-interceptor.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\services\interceptors\index.ts" />
   </ItemGroup>

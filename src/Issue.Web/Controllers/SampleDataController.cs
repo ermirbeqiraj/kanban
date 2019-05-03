@@ -2,11 +2,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Issue.Web.Controllers
 {
     [Route("api/[controller]")]
+    [Produces("application/json")]
     public class SampleDataController : Controller
     {
         private static string[] Summaries = new[]
@@ -15,6 +18,7 @@ namespace Issue.Web.Controllers
         };
 
         [HttpGet("[action]")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public IEnumerable<WeatherForecast> WeatherForecasts()
         {
             var rng = new Random();
