@@ -33,6 +33,8 @@ import { UpdateProjectComponent } from './mng-project/update-project.component';
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'login', component: LoginComponent },
       { path: 'list-project', component: ListProjectComponent },
+      { path: 'update-project/:id', component: UpdateProjectComponent },
+      { path: 'create-project', component: CreateProjectComponent }
     ])
   ],
   providers: [httpInterceptorProviders],
