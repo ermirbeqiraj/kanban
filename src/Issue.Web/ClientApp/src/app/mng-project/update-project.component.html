@@ -1,3 +1,57 @@
-<p>
-  update-project works!
-</p>
+<div class="row justify-content-center">
+  <div class="col-12 ">
+    <div class="card">
+      <div class="card-header">
+        Update Project
+      </div>
+      <div class="card-body">
+        <form [formGroup]="projectForm" #lgForm="ngForm" (ngSubmit)="submit(projectForm)">
+          <div class="form-group">
+            <label>Name</label>
+            <input formControlName="name" class="form-control" />
+          </div>
+          <div class="alert alert-danger" style="padding-bottom:1px;padding-top:1px;"
+               role="alert" *ngIf="projectForm.get('name').dirty && projectForm.get('name').hasError('required')">
+            This field is required. Please fill it !
+          </div>
+          <div class="alert alert-danger" style="padding-bottom:1px;padding-top:1px;"
+               role="alert" *ngIf="projectForm.get('name').hasError('maxLength')">
+            You have written to many characters.
+          </div>
+          <div class="form-group">
+            <label>Description</label>
+            <textarea class="form-control" formControlName="description"></textarea>
+          </div>
+          <div class="alert alert-danger form-group mt-3" style="padding-bottom:1px;padding-top:1px;"
+               role="alert" *ngIf="projectForm.get('description').hasError('maxLength')">
+            You have written to many characters.
+          </div>
+          <div class="form-group">
+            <label>Repository URL</label>
+            <input formControlName="repositoryUrl" class="form-control" />
+          </div>
+          <div class="alert alert-danger form-group mt-3" style="padding-bottom:1px;padding-top:1px;"
+               role="alert" *ngIf="projectForm.get('repositoryUrl').hasError('maxLength')">
+            You have written to many characters.
+          </div>
+          <div class="form-group">
+            <label>Staging URL</label>
+            <input formControlName="stagingUrl" class="form-control" />
+          </div>
+          <div class="alert alert-danger form-group mt-3" style="padding-bottom:1px;padding-top:1px;"
+               role="alert" *ngIf="projectForm.get('stagingUrl').hasError('maxLength')">
+            You have written to many characters.
+          </div>
+          <div class="row justify-content-center form-group">
+            <div class="col">
+              <button class="btn btn-outline-success btn-block" [disabled]="!lgForm.valid" type="submit">Save Changes</button>
+            </div>
+            <div class="col">
+              <a class="btn btn-outline-info btn-block" (click)="goToList()"> Go Back</a>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
