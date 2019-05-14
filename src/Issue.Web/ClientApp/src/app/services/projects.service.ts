@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { InternalProjectModel } from '../models/ProjectModels';
 import { Observable } from 'rxjs';
+import { UpdateUserPassword } from '../models/AccountModels';
 
 @Injectable({
   providedIn: 'root'
@@ -33,5 +34,10 @@ export class ProjectsService {
   delete(id: number): Observable<void> {
     let url = `${this.appUrl}/Delete?id=${id}`;
     return this.http.delete<void>(url);
+  }
+
+  updatePassword(model: UpdateUserPassword): Observable<UpdateUserPassword> {
+    let url = `${this.appUrl}/UpdatePassword`;
+    return this.http.put<UpdateUserPassword>(url, model);
   }
 }

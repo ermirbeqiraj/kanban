@@ -21,27 +21,20 @@ export class UpdateProjectComponent implements OnInit {
       description: ['', Validators.maxLength(500)],
       repositoryUrl: ['', Validators.maxLength(300)],
       stagingUrl: ['', Validators.maxLength(300)]
-
     });
   }
 
   ngOnInit() {
-      this.activatedRouter.params.subscribe(params => {
-        if (params.id) {
-          this.currentId = parseInt(params.id);
-          this.getProject();
-        }
-        else {
-          console.log("Error");
-        }
-      });
-    
+    this.activatedRouter.params.subscribe(params => {
+      if (params.id) {
+        this.currentId = parseInt(params.id);
+        this.getProject();
+      }
+      else {
+        console.log("Error");
+      }
+    });
   }
-  goToList() {
-    this.route.navigate(['./list-project']);
-  }
-
-
 
   getProject() {
     if (this.currentId) {
@@ -57,7 +50,6 @@ export class UpdateProjectComponent implements OnInit {
     }
     else
       console.log("Nuk vjen Projekti");
-    
   }
 
   submit({ value, valid }: { value: InternalProjectModel, valid: boolean }) {
@@ -70,6 +62,4 @@ export class UpdateProjectComponent implements OnInit {
       console.log("ERROR");
     }
   }
-
-
 }

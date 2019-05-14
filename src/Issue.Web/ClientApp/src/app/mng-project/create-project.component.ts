@@ -26,9 +26,6 @@ export class CreateProjectComponent implements OnInit {
   }
   create() { }
 
-  goToList() {
-    this.router.navigate(['./list-project']);
-  }
 
   submit({ value, valid }: { value: InternalProjectModel, valid: boolean }) {
     if (valid) {
