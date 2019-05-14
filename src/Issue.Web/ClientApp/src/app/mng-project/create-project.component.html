@@ -47,7 +47,7 @@
               <button class="btn btn-outline-success btn-block" [disabled]="!lgForm.valid" type="submit">Create</button>
             </div>
             <div class="col">
-              <a class="btn btn-outline-info btn-block" (click)="goToList()"> Go Back</a>
+              <a class="btn btn-outline-info btn-block" [routerLink]='["/list-project"]'> Go Back</a>
             </div>
           </div>
         </form>

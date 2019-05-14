@@ -1,0 +1,46 @@
+<div class="row justify-content-center">
+  <div class="col-12 ">
+    <div class="card">
+      <div class="card-header">
+        Update  User
+      </div>
+      <div class="card-body">
+        <form [formGroup]="userGroup" #lgForm="ngForm" (ngSubmit)="submit(userGroup)">
+          <div class="form-group">
+            <label>User Name</label>
+            <input formControlName="userName" class="form-control" />
+          </div>
+          <div class="alert alert-danger" style="padding-bottom:1px;padding-top:1px;"
+               role="alert" *ngIf="userGroup.get('userName').dirty && userGroup.get('userName').hasError('required')">
+            This field is required. Please fill it !
+          </div>
+          <div class="form-group">
+            <label>Email</label>
+            <input class="form-control" type="email"  formControlName="email" />
+          </div>
+          <div class="alert alert-danger form-group mt-3" style="padding-bottom:1px;padding-top:1px;"
+               role="alert" *ngIf="userGroup.get('email').hasError('email') || ( userGroup.get('email').dirty && userGroup.get('email').hasError('required'))">
+            This field is required. Please fill it ! It must be in following form "characters@characters.domain"!
+          </div>
+          <div class="form-group">
+            <label>Phone Number</label>
+            <input formControlName="phoneNumber" type="tel"  class="form-control" />
+          </div>
+          <div class="alert alert-danger form-group mt-3" style="padding-bottom:1px;padding-top:1px;"
+               role="alert" *ngIf="userGroup.get('phoneNumber').hasError('required')">
+            You have written to many characters.
+          </div>
+          <div class="row justify-content-center form-group">
+            <div class="col">
+              <button class="btn btn-outline-success btn-block" [disabled]="!lgForm.valid" type="submit">Update</button>
+            </div>
+            <div class="col">
+              <a class="btn btn-outline-info btn-block" [routerLink]='["/list-user"]'> Go Back</a>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
