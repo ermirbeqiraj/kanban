@@ -1,7 +1,6 @@
 ﻿using Issue.Data.Models;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
@@ -10,15 +9,15 @@ namespace Issue.Data.Repositories
 {
     public interface ITaskRepository
     {
-        Task<List<TaskModels>> GetAllTasksAsync();
+        Task<List<TaskModel>> GetAllTasksAsync(int projectId);
 
-        Task CreateTaskAsync(TaskModels model);
+        Task CreateTaskAsync(int projectId, TaskModel model);
 
-        Task UpdateTaskAsync(TaskModels model);
+        Task UpdateTaskAsync(TaskModel model);
 
         Task DeleteTaskAsync(int id, string author);
 
-        Task<TaskModels> GetTaskByIdAsync(int id);
+        Task<TaskModel> GetTaskByIdAsync(int id);
     }
 
 
@@ -31,7 +30,7 @@ namespace Issue.Data.Repositories
             _context = context;
         }
 
-        public async Task CreateTaskAsync(TaskModels model)
+        public async Task CreateTaskAsync(int projectId, TaskModel model)
         {
             _context.Tasks.Add(new Entity.Task
             {
@@ -39,14 +38,15 @@ namespace Issue.Data.Repositories
                 Created = DateTime.UtcNow,
                 CreatedBy = model.CreatedBy,
                 Description = model.Description,
-                Title = model.Title
-
+                Title = model.Title,
+                ProjectId = projectId,
+                Modified = null
             });
 
             await _context.SaveChangesAsync();
         }
 
-        public async Task UpdateTaskAsync(TaskModels model)
+        public async Task UpdateTaskAsync(TaskModel model)
         {
             var dbTask = await _context.Tasks.Where(x => x.Id == model.Id).FirstOrDefaultAsync();
 
@@ -57,6 +57,7 @@ namespace Issue.Data.Repositories
             dbTask.Modified = DateTime.UtcNow;
             dbTask.Title = model.Title;
             dbTask.UpdatedBy = model.UpdatedBy;
+
 
             _context.Entry(dbTask).State = EntityState.Modified;
             await _context.SaveChangesAsync();
@@ -76,29 +77,31 @@ namespace Issue.Data.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task<List<TaskModels>> GetAllTasksAsync()
+        public async Task<List<TaskModel>> GetAllTasksAsync(int projectId)
         {
-            return await _context.Tasks.Select(x => new TaskModels
+            return await _context.Tasks.Where(a => a.ProjectId == projectId).Select(x => new TaskModel
             {
                 Id = x.Id,
                 CreatedBy = x.CreatedBy,
                 Description = x.Description,
                 Title = x.Title,
-                UpdatedBy = x.UpdatedBy
+                UpdatedBy = x.UpdatedBy,
             }).ToListAsync();
         }
 
 
-        public async Task<TaskModels> GetTaskByIdAsync(int id)
+        public async Task<TaskModel> GetTaskByIdAsync(int id)
         {
             return await _context.Tasks.Where(x => x.Id == id)
-                .Select(x => new TaskModels
+                .Select(x => new TaskModel
                 {
                     Id = x.Id,
                     CreatedBy = x.CreatedBy,
                     Description = x.Description,
                     Title = x.Title,
-                    UpdatedBy = x.UpdatedBy
+                    UpdatedBy = x.UpdatedBy,
+                    ProjectId = x.ProjectId
+
                 }).FirstOrDefaultAsync();
         }
 

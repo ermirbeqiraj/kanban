@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using System;
 using System.Collections.Generic;
 
 namespace Issue.Web.IdentityModels
@@ -19,5 +20,10 @@ namespace Issue.Web.IdentityModels
         /// Navigation property for this users login accounts.
         /// </summary>
         public virtual ICollection<IdentityUserLogin<int>> Logins { get; } = new List<IdentityUserLogin<int>>();
+
+        public static implicit operator string(ApplicationUser v)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

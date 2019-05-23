@@ -1,7 +1,10 @@
-﻿using Issue.Data.Models;
+﻿using Issue.Data;
+using Issue.Data.Models;
 using Issue.Data.Repositories;
+using Issue.Web.IdentityModels;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -36,23 +39,25 @@ namespace Issue.Web.Controllers
         }
 
         [HttpPost]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<IActionResult> Create([FromBody]InternalProjectModel model)
         {
             if (!ModelState.IsValid)
                 return BadRequest("Model is not valid");
 
-            model.CreatedBy = User.Identity.Name;
+            model.CreatedBy = User.GetUserName();
             await _projectRepo.CreateProjectAsync(model);
             return Ok();
         }
 
         [HttpPut]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<IActionResult> Update([FromBody] InternalProjectModel model)
         {
             if (!ModelState.IsValid)
                 return BadRequest("Model is not valid");
 
-            model.UpdatedBy = User.Identity.Name;
+            model.UpdatedBy = User.GetUserName();
             await _projectRepo.UpdateProjectAsync(model);
             return Ok();
         }

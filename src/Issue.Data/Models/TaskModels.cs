@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Issue.Data.Models
 {
-    public class TaskModels
+    public class TaskModel
     {
         public int Id { get; set; }
 
@@ -27,7 +27,4 @@ namespace Issue.Data.Models
         public int ProjectId { get; set; }
 
     }
-
-
-    
 }

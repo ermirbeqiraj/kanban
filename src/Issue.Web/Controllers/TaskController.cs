@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Issue.Data;
 using Issue.Data.Models;
 using Issue.Data.Repositories;
 using Issue.Web.IdentityModels;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -13,60 +16,63 @@ using Microsoft.Extensions.Logging;
 
 namespace Issue.Web.Controllers
 {
-    public class TaskController : Controller
+
+    public class TaskController : ControllerBase
     {
         private readonly ITaskRepository _taskRepo;
         private readonly ILogger _logger;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        private const int PAGE_SIZE = 20;
 
-        public TaskController(ITaskRepository taskRepo, ILogger logger)
+        public TaskController(UserManager<ApplicationUser> userManager, ITaskRepository taskRepo, ILogger<TaskController> logger)
         {
             _taskRepo = taskRepo;
             _logger = logger;
-
+            _userManager = userManager;
         }
 
         [HttpGet]
-        public async Task<IActionResult> List(int projectId, int? pageNumber)
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        public async Task<IActionResult> List([FromQuery]int projectId)
         {
-            if (!pageNumber.HasValue)
-                pageNumber = 1;
+            var items = await _taskRepo.GetAllTasksAsync(projectId);
 
-            var items = await _taskRepo.GetAllTasksAsync();
-            var items1 = items
-            .OrderByDescending(x => x.Created)
-            .Skip((pageNumber.Value - 1) * PAGE_SIZE)
-            .Take(PAGE_SIZE);
-
-            return Ok(items1);
+            return Ok(items);
         }
 
         [HttpGet]
         public async Task<IActionResult> GetTaskById(int id)
         {
             var item = await _taskRepo.GetTaskByIdAsync(id);
+            var item2 = item;
             return Ok(item);
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateTask([FromBody] TaskModels model)
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        public async Task<IActionResult> CreateTask([FromBody] TaskModel model, [FromQuery] int projectId)
         {
             if (!ModelState.IsValid)
                 return BadRequest("Model is not valid");
 
-            model.CreatedBy = User.Identity.Name;
-            await _taskRepo.CreateTaskAsync(model);
+            model.CreatedBy = User.GetUserName();
+            if (model.CreatedBy == null)
+            {
+                return BadRequest("Ju nuk jeni loguar me nje user");
+            }
+            await _taskRepo.CreateTaskAsync(projectId, model);
+
             return Ok();
         }
 
         [HttpPut]
-        public async Task<IActionResult> UpdateTask([FromBody] TaskModels model)
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        public async Task<IActionResult> UpdateTask([FromQuery] int projectId,[FromBody] TaskModel model)
         {
             if (!ModelState.IsValid)
                 return BadRequest("Model is not valid");
 
-            model.UpdatedBy = User.Identity.Name;
+            model.UpdatedBy = User.GetUserName();
             await _taskRepo.UpdateTaskAsync(model);
             return Ok();
         }
