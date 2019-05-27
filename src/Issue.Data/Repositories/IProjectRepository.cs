@@ -26,6 +26,7 @@ namespace Issue.Data.Repositories
 
         public async Task CreateProjectAsync(InternalProjectModel model)
         {
+            
             _context.Projects.Add(new Entity.Project
             {
                 Active = true,

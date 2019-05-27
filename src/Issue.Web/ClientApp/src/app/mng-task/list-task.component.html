@@ -3,8 +3,8 @@
 
     <div class="card">
       <div class="card-header">
-        <span>All projects</span>
-        <a [routerLink]="['/create-project']" class="btn btn-link float-right">
+        <span>All Tasks</span>
+        <a [routerLink]="['/create-task']" [queryParams]="{projectId: projectId}" class="btn btn-link float-right">
           New
         </a>
       </div>
@@ -21,23 +21,25 @@
           <table class="table">
             <thead>
               <tr>
-                <th>Name</th>
+                <th>Title</th>
                 <th>Description</th>
+                <th>Created By</th>
                 <th>&nbsp;</th>
               </tr>
             </thead>
             <tbody>
               <tr *ngFor="let item of data">
                 <td>
-                  {{ item.name }}
+                  {{ item.title }}
                 </td>
                 <td>
                   {{ item.description }}
                 </td>
                 <td>
-                  <a [routerLink]="['/update-project', item.id]">Update</a>
-                  |<button class="btn btn-link" (click)="delete(item.id)">Delete</button>
-                  | &nbsp;<a [routerLink]="['/list-task']" [queryParams]="{ projectId: item.id }">List of Task</a>
+                  {{ item.createdBy }}
+                </td>
+                <td>
+                  <a [routerLink]="['/update-task', item.id]" [queryParams]="{projectId: projectId}">Update</a> |<button class="btn btn-link" (click)="delete(item.id)">Delete</button>
                 </td>
               </tr>
             </tbody>
@@ -45,6 +47,5 @@
         </div>
       </div>
     </div>
-
   </div>
 </div>

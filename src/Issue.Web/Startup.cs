@@ -71,7 +71,9 @@ namespace Issue.Web
                 configuration.RootPath = "ClientApp/dist";
             });
 
+
             services.AddTransient<IProjectRepository, ProjectRepository>();
+            services.AddTransient<ITaskRepository, TaskRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

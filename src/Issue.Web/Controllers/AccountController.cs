@@ -8,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
@@ -57,6 +58,8 @@ namespace Issue.Web.Controllers
                 };
 
                 var result = await _userManager.CreateAsync(aspNetUser, model.Password);
+                await _userManager.AddClaimAsync(aspNetUser, new Claim("Id", aspNetUser.Id.ToString(CultureInfo.InvariantCulture)));
+
                 if (!result.Succeeded)
                 {
                     // badreq
@@ -65,6 +68,8 @@ namespace Issue.Web.Controllers
                 }
                 else
                 {
+
+
                     return Ok();
                 }
             }

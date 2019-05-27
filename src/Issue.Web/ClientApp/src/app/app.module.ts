@@ -17,6 +17,9 @@ import { CreateUserComponent } from './account/create-user.component';
 import { ListUserComponent } from './account/list-user.component';
 import { UpdateUserComponent } from './account/update-user.component';
 import { UpdatePasswordComponent } from './account/update-password.component';
+import { ListTaskComponent } from './mng-task/list-task.component';
+import { CreateTaskComponent } from './mng-task/create-task.component';
+import { UpdateTaskComponent } from './mng-task/update-task.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +33,10 @@ import { UpdatePasswordComponent } from './account/update-password.component';
     CreateUserComponent,
     ListUserComponent,
     UpdateUserComponent,
-    UpdatePasswordComponent
+    UpdatePasswordComponent,
+    ListTaskComponent,
+    CreateTaskComponent,
+    UpdateTaskComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -46,7 +52,10 @@ import { UpdatePasswordComponent } from './account/update-password.component';
       { path: 'create-user', component: CreateUserComponent },
       { path: 'list-user', component: ListUserComponent },
       { path: 'update-user/:id', component: UpdateUserComponent },
-      { path: 'update-password/:id', component: UpdatePasswordComponent }
+      { path: 'update-password/:id', component: UpdatePasswordComponent },
+      { path: 'list-task', component: ListTaskComponent },
+      { path: 'create-task', component: CreateTaskComponent },
+      { path: 'update-task/:id', component: UpdateTaskComponent }
     ])
   ],
   providers: [httpInterceptorProviders],
